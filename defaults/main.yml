@@ -1,0 +1,6 @@
+---
+default_webroot_prefix: '/srv/www/'
+
+default_webroot_user: 'www-data'
+default_webroot_group: 'www-data'
+default_webroot_mode: 'u=rwx,g=rx,o='
