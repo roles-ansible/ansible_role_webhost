@@ -16,7 +16,7 @@
     state: directory
     owner: '{{ default_webroot_user }}'
     group: '{{ default_webroot_group }}'
-    mode: '{{ default_webroot_mode }}'
+    mode: 'u=rwx,g=rx,o=rx'
   with_items: '{{ nginx_sites }}'
   loop_control:
     loop_var: site
