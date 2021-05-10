@@ -1,17 +1,10 @@
 ---
-#- name: Create default common path prefix for sites
-#  file:
-#    path: '{{ default_webroot_prefix }}'
-#    state: directory
-#    owner: '{{ default_webroot_user }}'
-#    group: '{{ default_webroot_group }}'
-#    mode: '{{ default_webroot_mode }}'
-#  tags:
-#    - configuration
-
+- name: perform versionscheck
+  ansible.builtin.include_tasks: versioncheck.yml
+  when: submodules_versioncheck|bool
 
 - name: Create (common) web root parent for sites
-  file:
+  ansible.builtin.file:
     path: '{{ site.webroot.path | default(default_webroot_prefix + site.name) }}/..'
     state: directory
     owner: '{{ default_webroot_user }}'
@@ -21,12 +14,9 @@
   loop_control:
     loop_var: site
   when: site.webroot | default(false)
-  tags:
-    - configuration
-
 
 - name: Create web root for sites
-  file:
+  ansible.builtin.file:
     path: '{{ site.webroot.path | default(default_webroot_prefix + site.name) }}'
     state: directory
     owner: '{{ site.webroot.user | default(default_webroot_user) }}'
@@ -36,5 +26,3 @@
   loop_control:
     loop_var: site
   when: site.webroot | default(false)
-  tags:
-    - configuration
